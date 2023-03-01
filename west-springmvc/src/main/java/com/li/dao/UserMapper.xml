@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.li.dao.UserMapper">
+    <!--注册一个用户-->
+    <insert id="Register" parameterType="user">
+        insert into west2.user(userCode,userPassword,userSchool,userName,gender,administrator,banlance)
+        values (#{userCode},#{userPassword},#{userSchool},#{userName},#{gender},#{administrator},#{banlance})
+    </insert>
+
+    <!--登录判断-->
+    <select id="Userlogin" resultType="user">
+        select * from west2.user where userCode=#{userCode} and userPassword=#{Password}
+    </select>
+
+    <!--查询全部用户-->
+    <select id="queryUser" resultType="user">
+        SELECT * from west2.user
+    </select>
+
+    <!--添加一个众筹平台-->
+    <insert id="addFund" parameterType="funding2">
+        insert into west2.fundtest(userName,userSchool,goal,money,phone,instroduce,Fundstate,ps,moneystate)
+        values (#{userName},#{userSchool},#{goal},#{money},#{phone},#{instroduce},#{state},#{ps},#{moneystate})
+    </insert>
+
+    <!--查询所有的众筹平台-->
+    <select id="queryfund" resultType="funding2">
+        SELECT * from west2.fundtest
+    </select>
+<!--查询是否已被审核-->
+    <select id="isState" resultType="funding2">
+        SELECT * from west2.fundtest where state=1
+    </select>
+
+
+    <!--查询未过审核-->
+    <select id="noState" resultType="funding2">
+        SELECT * from west2.fundtest where state=0
+    </select>
+    <!--填写校友名称-->
+    <select id="Test" resultType="user">
+        SELECT * from west2.user where userCode=#{userCode}
+    </select>
+
+    <!--更新用户金额-->
+    <update id="UpdateBalance" parameterType="String">
+        update west2.user
+        set banlance=banlance+50 where userCode=#{userCode}
+    </update>
+
+    <!--查询学校信息-->
+    <select id="queryschool" resultType="school">
+        SELECT * from west2.school where Schoolname=#{schoolname}
+    </select>
+
+    <!--根据发起人的id来查询发起人信息-->
+    <select id="FundMess" resultType="funding2">
+        SELECT * from west2.fundtest where fundid=#{fundid}
+    </select>
+<!--根据用户的账号来更改用户的金额-->
+ <update id="UpdateBalance2" parameterType="user">
+     update west2.user
+     set banlance=#{banlance} where userCode=#{userCode}
+ </update>
+<!--根据用户的账号来查找用户信息-->
+    <select id="findUser" resultType="user">
+        select * from west2.user where userCode=#{userCode}
+    </select>
+
+</mapper>
+
